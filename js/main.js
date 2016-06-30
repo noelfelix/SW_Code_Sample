@@ -36,10 +36,12 @@ class PokerCard extends Card {
 }
 
 class Deck {
-  constructor (cardType = Card) {
+  constructor (cardType = Card, sortParams) {
     if (cardType.prototype instanceof Card === false) {
       cardType = Card;
     }
+
+    this.sortParams = sortParams;
 
     let suits = ["S", "D", "C", "H"];
     let ranks = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
@@ -77,36 +79,38 @@ class Deck {
   }
 
   order () {
-    let rankValues = {
-      'A' : 1, '2' : 2, '3' : 3, '4' : 4, '5' : 5, '6' : 6, '7' : 7,
-      '8' : 8, '9' : 9, '10' : 10, 'J' : 11, 'Q' : 12, 'K' : 13
-    };
+    if (!this.sortParams) {
+      let rankValues = {
+        'A' : 1, '2' : 2, '3' : 3, '4' : 4, '5' : 5, '6' : 6, '7' : 7,
+        '8' : 8, '9' : 9, '10' : 10, 'J' : 11, 'Q' : 12, 'K' : 13
+      };
 
-    let suitValues = {
-      'H' : 1, 'C' : 2, 'D' : 3, 'S' : 4
-    };
+      let suitValues = {
+        'H' : 1, 'C' : 2, 'D' : 3, 'S' : 4
+      };
 
-    this.cards.sort(function (card1, card2) {
-      let suitCheck = card1.suit === card2.suit ? 0 : suitValues[card1.suit] < suitValues[card2.suit] ? 1 : -1;
-      return suitCheck === 0 ? rankValues[card1.rank] - rankValues[card2.rank] : suitCheck;
-    });
+      this.cards.sort(function (card1, card2) {
+        let suitCheck = card1.suit === card2.suit ? 0 : suitValues[card1.suit] < suitValues[card2.suit] ? 1 : -1;
+        return suitCheck === 0 ? rankValues[card1.rank] - rankValues[card2.rank] : suitCheck;
+      });
+    } else {
+      let mySort = function (a, b, paramIndex) {
+        if (this.sortParams[paramIndex] === undefined) return 0;
+        if (a[this.sortParams[paramIndex]] === b[this.sortParams[paramIndex]]) return mySort(a, b, paramIndex + 1)
+        return a[this.sortParams[paramIndex]] > b[this.sortParams[paramIndex]] ? 1 : -1;
+      }.bind(this);
 
+      this.cards.sort(function (card1, card2) {
+        return mySort(card1, card2, 0);
+      });
+    }
     return this;
   }
 }
 
 class PokerDeck extends Deck {
   constructor () {
-    super(PokerCard);
-  }
-
-  order () {
-    this.cards.sort(function (card1, card2) {
-      let valCheck = card1.value - card2.value;
-      return valCheck === 0 ? card1.suit > card2.suit ? 1 : -1 : valCheck;
-    });
-
-    return this;
+    super(PokerCard, ['value', 'suit']);
   }
 }
 

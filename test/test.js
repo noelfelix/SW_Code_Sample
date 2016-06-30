@@ -111,10 +111,11 @@ describe('Deck Tests', function() {
       let pokerDeck = new PokerDeck().order();
       let sorted = true;
 
-      for (let i = 1; sorted && i < pokerDeck.cards.length; i++) {
+
+      for (i = 1; sorted && i < pokerDeck.cards.length; i++) {
         sorted = pokerDeck.cards[i].value === pokerDeck.cards[i - 1].value ?
           pokerDeck.cards[i].suit >= pokerDeck.cards[i - 1].suit :
-          pokerDeck.cards[i].value >= pokerDeck.cards[i - 1].value
+          pokerDeck.cards[i].value >= pokerDeck.cards[i - 1].value;
       }
 
       expect(sorted).to.be.true;
