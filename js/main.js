@@ -109,3 +109,14 @@ class PokerDeck extends Deck {
     return this;
   }
 }
+
+let deck = new Deck();
+let pokerDeck = new PokerDeck();
+
+console.log('GENERIC DECK INIT:\n' + deck.render());
+console.log('GENERIC DECK SHUFFLE:\n' + deck.shuffle().render());
+console.log('GENERIC DECK ORDERED:\n' + deck.order().render());
+console.log('\n');
+console.log('POKER DECK INIT:\n' + pokerDeck.render());
+console.log('POKER DECK SHUFFLE:\n' + pokerDeck.shuffle().render());
+console.log('POKER DECK ORDERED:\n' + pokerDeck.order().render());
