@@ -1,0 +1,24 @@
+{
+  "name": "ShiftWise Coding Sample",
+  "authors": [
+    "Noel Felix <noel.r.felix@gmail.com>"
+  ],
+  "description": "",
+  "main": "js/main.js",
+  "moduleType": [
+    "es6"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "mocha": "^2.5.3",
+    "chai": "^3.5.0"
+  }
+}
