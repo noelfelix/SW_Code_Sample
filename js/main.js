@@ -36,7 +36,7 @@ class PokerCard extends Card {
 }
 
 class Deck {
-  constructor (cardType = Card, sortParams) {
+  constructor (cardType = Card, ...sortParams) {
     if (cardType.prototype instanceof Card === false) {
       cardType = Card;
     }
@@ -79,7 +79,7 @@ class Deck {
   }
 
   order () {
-    if (!this.sortParams) {
+    if (!this.sortParams.length) {
       let rankValues = {
         'A' : 1, '2' : 2, '3' : 3, '4' : 4, '5' : 5, '6' : 6, '7' : 7,
         '8' : 8, '9' : 9, '10' : 10, 'J' : 11, 'Q' : 12, 'K' : 13
@@ -110,7 +110,7 @@ class Deck {
 
 class PokerDeck extends Deck {
   constructor () {
-    super(PokerCard, ['value', 'suit']);
+    super(PokerCard, 'value', 'suit');
   }
 }
 
